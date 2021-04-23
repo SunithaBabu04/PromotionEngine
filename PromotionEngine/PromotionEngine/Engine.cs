@@ -55,6 +55,8 @@ namespace PromotionEngine
                     else if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() > 1)
                     {
                         // if there is a multiplce entry in pormotions for the porduct, like bundle , C + D
+                        List<string> productsBundle = promotions.Where(p => p.PromotionId == prom.PromotionId).Select(p => p.ProductId).ToList();
+                        List<Cart> orderBundle = order.Products.Where(p => productsBundle.Contains(p.ProductId)).ToList();
 
                     }
                 }
