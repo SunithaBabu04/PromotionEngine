@@ -73,7 +73,8 @@ namespace PromotionEngineTest
             IEngine unitOfWork = serviceProvider.GetService<IEngine>();
             PromotionEngineService newObj = new PromotionEngineService(unitOfWork);
             decimal calcValue = newObj.CalculateOrderPrice(order, promotions, products);
-            Assert.Equal(calcValue, result);
+            // To check if the calculated and the expected value are same
+            Assert.Equal(calcValue, result); 
         }
         #endregion
     }
