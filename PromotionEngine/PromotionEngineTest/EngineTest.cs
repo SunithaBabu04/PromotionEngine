@@ -48,7 +48,6 @@ namespace PromotionEngineTest
                 new Promotion(4,"E", "PERCENT",0,0.5M)
             };
 
-            List<Order> orders = new List<Order>();
             Order order1 = new Order(1, new List<Cart>() { new Cart("A", 1), new Cart("B", 1), new Cart("C", 1) });
             Order order2 = new Order(2, new List<Cart>() { new Cart("A", 5), new Cart("B", 5), new Cart("C", 1) });
             Order order3 = new Order(3, new List<Cart>() { new Cart("A", 3), new Cart("B", 5), new Cart("C", 1), new Cart("D", 1) });

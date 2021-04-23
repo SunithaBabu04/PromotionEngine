@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------
 namespace PromotionEngineTest
 {
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using PromotionEngine;
@@ -21,9 +20,6 @@ namespace PromotionEngineTest
 
         public IServiceProvider BuildServiceProvider()
         {
-            var builder = new ConfigurationBuilder();
-            IConfiguration Configuration = builder.Build();
-
             var services = new ServiceCollection();
             services.AddInjection();
             serviceProvider = services.BuildServiceProvider();
