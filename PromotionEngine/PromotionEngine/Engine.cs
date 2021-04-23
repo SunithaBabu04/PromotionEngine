@@ -57,13 +57,17 @@ namespace PromotionEngine
                         // if there is a multiplce entry in pormotions for the porduct, like bundle , C + D
                         List<string> productsBundle = promotions.Where(p => p.PromotionId == prom.PromotionId).Select(p => p.ProductId).ToList();
                         List<Cart> orderBundle = order.Products.Where(p => productsBundle.Contains(p.ProductId)).ToList();
-                        foreach (var b in orderBundle)
+                        if (orderBundle.Count > 1)
                         {
-                            if (b.OrderQuantity == promotions.Where(p => p.ProductId == b.ProductId).Select(p => p.PromotionQty).FirstOrDefault())
+                            foreach (var b in orderBundle)
                             {
-                                calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                                if (b.OrderQuantity == promotions.Where(p => p.ProductId == b.ProductId).Select(p => p.PromotionQty).FirstOrDefault())
+                                {
+                                    calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
+                                }
+
+                                break;
                             }
-                            break;
                         }
                     }
                 }
