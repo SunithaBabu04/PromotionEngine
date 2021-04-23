@@ -32,25 +32,31 @@ namespace PromotionEngine
             {
                 // select if there aer any promotions to the product in the order
                 Promotion prom = promotions.Where(p => p.ProductId == orderItem.ProductId).FirstOrDefault();
-
-                // if there is a single entry in pormotions for the porduct
-                if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() == 1)
-                {
-                    // apply promotion price for quantities in promotion, for the rest of the product, apply product price
-                    if (prom.PromotionProductUOM == "QTY")
-                    {
-                        calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
-                    }
-                }
-                else if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() > 1)
-                {
-                    // if there is a multiplce entry in pormotions for the porduct, like bundle , C + D
-
-                }
-                else
+                if (prom == null)
                 {
                     // if there is no pormotions for the product, like product F
                     calcPrice += orderItem.OrderQuantity * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice;
+                }
+                else
+                {
+                    // if there is a single entry in pormotions for the porduct
+                    if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() == 1)
+                    {
+                        // apply promotion price for quantities in promotion, for the rest of the product, apply product price
+                        if (prom.PromotionProductUOM == "QTY")
+                        {
+                            calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
+                        }
+                        else if (prom.PromotionProductUOM == "PERCENT")
+                        {
+                            calcPrice += orderItem.OrderQuantity * (products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice - (products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice * prom.PromotionPrice));
+                        }
+                    }
+                    else if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() > 1)
+                    {
+                        // if there is a multiplce entry in pormotions for the porduct, like bundle , C + D
+
+                    }
                 }
             }
 
