@@ -63,6 +63,7 @@ namespace PromotionEngine
                             {
                                 calcPrice += promotions.Where(p => p.ProductId == prom.ProductId).Select(p => p.PromotionPrice).FirstOrDefault() * b.OrderQuantity;
                             }
+                            break;
                         }
                     }
                 }
