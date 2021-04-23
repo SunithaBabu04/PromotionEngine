@@ -32,6 +32,9 @@ namespace PromotionEngine
             {
                 // select if there aer any promotions to the product in the order
                 Promotion prom = promotions.Where(p => p.ProductId == orderItem.ProductId).FirstOrDefault();
+
+                // apply promotion price for quantities in promotion, for the rest of the product, apply product price
+                calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
             }
 
             return calcPrice;
