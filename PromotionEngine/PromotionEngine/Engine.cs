@@ -37,7 +37,10 @@ namespace PromotionEngine
                 if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() == 1)
                 {
                     // apply promotion price for quantities in promotion, for the rest of the product, apply product price
-                    calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
+                    if (prom.PromotionProductUOM == "QTY")
+                    {
+                        calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
+                    }
                 }
                 else if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() > 1)
                 {
