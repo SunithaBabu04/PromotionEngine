@@ -33,8 +33,22 @@ namespace PromotionEngine
                 // select if there aer any promotions to the product in the order
                 Promotion prom = promotions.Where(p => p.ProductId == orderItem.ProductId).FirstOrDefault();
 
-                // apply promotion price for quantities in promotion, for the rest of the product, apply product price
-                calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
+                // if there is a single entry in pormotions for the porduct
+                if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() == 1)
+                {
+                    // apply promotion price for quantities in promotion, for the rest of the product, apply product price
+                    calcPrice += ((orderItem.OrderQuantity / prom.PromotionQty) * prom.PromotionPrice) + ((orderItem.OrderQuantity % prom.PromotionQty) * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice);
+                }
+                else if (promotions.Where(p => p.PromotionId == prom.PromotionId).Count() > 1)
+                {
+                    // if there is a multiplce entry in pormotions for the porduct, like bundle , C + D
+
+                }
+                else
+                {
+                    // if there is no pormotions for the product, like product F
+                }
+
             }
 
             return calcPrice;
