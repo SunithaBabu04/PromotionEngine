@@ -47,8 +47,8 @@ namespace PromotionEngine
                 else
                 {
                     // if there is no pormotions for the product, like product F
+                    calcPrice += orderItem.OrderQuantity * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice;
                 }
-
             }
 
             return calcPrice;
