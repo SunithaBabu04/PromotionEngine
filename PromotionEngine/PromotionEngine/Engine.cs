@@ -69,6 +69,10 @@ namespace PromotionEngine
                                 break;
                             }
                         }
+                        else
+                        {
+                            calcPrice += orderItem.OrderQuantity * products.FirstOrDefault(p => p.ProductId == orderItem.ProductId).ProductPrice;
+                        }
                     }
                 }
             }
